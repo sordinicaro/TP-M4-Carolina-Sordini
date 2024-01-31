@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node ./src/index.ts",
-    "dev ": "ts-node ./src/model/model.ts",
+    "dev": "ts-node ./src/model/model.ts",
     "buld": "tsc"
   },
   "author": "",
