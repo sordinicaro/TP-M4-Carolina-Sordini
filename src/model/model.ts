@@ -73,6 +73,25 @@ const getCharacterById = async (id: any) => {
 
 getCharacterById(18)
 
+
+
+const getCharactersByGender = async (gender: string) => {
+  try {
+    const characters: any = await getAllData();
+    if (characters instanceof Error) {
+      throw characters;
+    }
+    const charactersByGender = characters.filter((character: any) => character.gender === gender);
+
+    return charactersByGender;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+getCharactersByGender("Female");
+
+
 const main = async () => {
   const allData = await getAllData();
   console.log(allData);
@@ -80,6 +99,8 @@ const main = async () => {
   // console.log(allCharacters);
   const byId= await getCharacterById(18)
   console.log(byId);
+  const byGender = await getCharactersByGender("Female");
+  console.log(byGender);
 
 }
 
