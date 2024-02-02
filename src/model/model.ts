@@ -35,23 +35,23 @@ getAllData();
 
 
 
-// const getAllTitlesCharcters = async () => {
-//   try {
+const getAllTitlesCharcters = async () => {
+  try {
 
-//     const characters: any = await getAllData();
-//     if (characters instanceof Error) {
-//       throw characters;
-//     }
+    const characters: any = await getAllData();
+    if (characters instanceof Error) {
+      throw characters;
+    }
 
-//     const characterNames = characters.filter((character: any) => character.results.name);
+    const characterNames = characters.filter((character: any) => character.name);
 
-//     return characterNames;
-//   } catch (error) {
-//     console.log(error);
+    return characterNames;
+  } catch (error) {
+    console.log(error);
 
-//   }
-// }
-// getAllTitlesCharcters()
+  }
+}
+getAllTitlesCharcters()
 
 
 const getCharacterById = async (id: any) => {
@@ -91,16 +91,47 @@ const getCharactersByGender = async (gender: string) => {
 
 getCharactersByGender("Female");
 
+const getMappedCharactersData= async () => {
+  try {
+    const characters: any = await getAllData();
+  if (characters instanceof Error) {
+    throw characters;
+  }
+
+  const characterDetails = characters.map((character: any) => ({
+    id: character.id,
+    name: character.name,
+    status: character.status,
+    species: character.species,
+    type: character.type,
+    gender: character.gender
+  }));
+
+  return characterDetails;
+} catch (error) {
+  console.log(error);
+}
+}
+
+getMappedCharactersData();
+
+
+
+
+
+
 
 const main = async () => {
   const allData = await getAllData();
   console.log(allData);
   // const allCharacters = await getAllTitlesCharcters();
   // console.log(allCharacters);
-  const byId= await getCharacterById(18)
-  console.log(byId);
-  const byGender = await getCharactersByGender("Female");
-  console.log(byGender);
+  // const byId= await getCharacterById(18)
+  // console.log(byId);
+  // const byGender = await getCharactersByGender("Female");
+  // console.log(byGender);
+  const mapCharactersData= await getMappedCharactersData();
+  console.log(mapCharactersData);
 
 }
 
