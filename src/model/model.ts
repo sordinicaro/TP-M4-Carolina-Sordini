@@ -3,15 +3,18 @@ import { rickAndMorty } from "../interfaces/rickAndMorty"
 
 dotenv.config()
 
-const apiRAM: any = process.env.API_KEY
-const character: any = process.env.CHARACTER
+const urlApi:any = process.env.API_KEY;
+const api = new URL(urlApi);
+
+
+
 
 
 
 
 const getAllData = async (): Promise<rickAndMorty | undefined> => {
   try {
-    const response = await fetch(apiRAM + character);
+    const response = await fetch(api );
 
     if (!response.ok) {
       throw new Error("error to fetch");
@@ -21,8 +24,8 @@ const getAllData = async (): Promise<rickAndMorty | undefined> => {
     const rickandmortyData = await response.json();
     const resultsRAM = rickandmortyData.results;
     return resultsRAM;
-  } catch (error) {
-    console.log(error);
+  } catch (error:any) {
+    return error;
 
   }
 
@@ -38,16 +41,16 @@ getAllData();
 const getAllTitlesCharcters = async () => {
   try {
 
-    const characters: any = await getAllData();
+    const characters:any = await getAllData();
     if (characters instanceof Error) {
       throw characters;
     }
 
-    const characterNames = characters.filter((character: any) => character.name);
+    const characterNames = characters.map((character:any) => character.name);
 
     return characterNames;
   } catch (error) {
-    console.log(error);
+    return error;
 
   }
 }
@@ -122,16 +125,16 @@ getMappedCharactersData();
 
 
 const main = async () => {
-  const allData = await getAllData();
-  console.log(allData);
-  // const allCharacters = await getAllTitlesCharcters();
-  // console.log(allCharacters);
+  // const allData = await getAllData();
+  // console.log(allData);
+  const allCharacters = await getAllTitlesCharcters();
+  console.log(allCharacters);
   // const byId= await getCharacterById(18)
   // console.log(byId);
   // const byGender = await getCharactersByGender("Female");
   // console.log(byGender);
-  const mapCharactersData= await getMappedCharactersData();
-  console.log(mapCharactersData);
+  // const mapCharactersData= await getMappedCharactersData();
+  // console.log(mapCharactersData);
 
 }
 
