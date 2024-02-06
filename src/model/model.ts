@@ -1,142 +1,112 @@
 import dotenv from "dotenv"
-import { rickAndMorty } from "../interfaces/rickAndMorty"
+import { Character } from "../interfaces/rickAndMorty"
 
 dotenv.config()
 
-const urlApi:any = process.env.API_KEY;
+const urlApi= process.env.API_KEY!;
 const api = new URL(urlApi);
 
 
 
-
-
-
-
-const getAllData = async (): Promise<rickAndMorty | undefined> => {
+const getAllData = async (): Promise<Character[] | Error> => {
   try {
-    const response = await fetch(api );
-
+    const response= await fetch(api);
     if (!response.ok) {
-      throw new Error("error to fetch");
-
+      throw new Error("Recurso no encontrado.");
     }
 
     const rickandmortyData = await response.json();
     const resultsRAM = rickandmortyData.results;
     return resultsRAM;
-  } catch (error:any) {
-    return error;
-
+  } catch (error: any) {
+    return new Error(error);
   }
-
-
-
 }
 
-getAllData();
 
-
-
-
-const getAllTitlesCharcters = async () => {
+const getAllTitlesCharcters = async (): Promise<string[] | Error> => {
   try {
-
-    const characters:any = await getAllData();
-    if (characters instanceof Error) {
-      throw characters;
+    const data = await getAllData();
+    if (data instanceof Error) {
+      throw data;
     }
 
-    const characterNames = characters.map((character:any) => character.name);
+    const characterNames = data.map((character: Character) => character.name);
 
     return characterNames;
-  } catch (error) {
+  } catch (error: any) {
     return error;
 
   }
 }
-getAllTitlesCharcters()
 
 
-const getCharacterById = async (id: any) => {
+
+const getCharacterById = async (id: number): Promise<Character | Error> => {
   try {
 
-    const characters: any = await getAllData();
-    if (characters instanceof Error) {
-      throw characters;
+    const data: any = await getAllData();
+    if (data instanceof Error) {
+      throw data;
     }
-    const characterById = characters.find((character: any) => id === character.id)
+    const characterById = data.find((character: Character) => id === character.id)
 
 
     return characterById;
   } catch (error) {
-    console.log(error);
-
+    return  new Error();
   }
 }
 
-getCharacterById(18)
 
 
 
-const getCharactersByGender = async (gender: string) => {
+
+const getCharactersByGender = async (gender: string): Promise<Character[] | Error> => {
   try {
-    const characters: any = await getAllData();
-    if (characters instanceof Error) {
-      throw characters;
+    const data = await getAllData();
+    if (data instanceof Error) {
+      throw data;
     }
-    const charactersByGender = characters.filter((character: any) => character.gender === gender);
+    const charactersByGender = data.filter((character:Character) => character.gender === gender);
 
     return charactersByGender;
   } catch (error) {
-    console.log(error);
+    return new Error();
   }
 }
 
-getCharactersByGender("Female");
 
-const getMappedCharactersData= async () => {
+
+const getMappedCharactersData = async (): Promise< Character[] | Error> => {
   try {
-    const characters: any = await getAllData();
-  if (characters instanceof Error) {
-    throw characters;
+    const data:any = await getAllData();
+    if (data instanceof Error) {
+      throw data;
+    }
+
+    const characterDetails = data.map((character:Character) => ({
+      id: character.id,
+      name: character.name,
+      status: character.status,
+      species: character.species,
+      type: character.type,
+      gender: character.gender
+    }));
+
+    return characterDetails;
+  } catch (error) {
+    return new Error();
   }
-
-  const characterDetails = characters.map((character: any) => ({
-    id: character.id,
-    name: character.name,
-    status: character.status,
-    species: character.species,
-    type: character.type,
-    gender: character.gender
-  }));
-
-  return characterDetails;
-} catch (error) {
-  console.log(error);
-}
 }
 
-getMappedCharactersData();
 
 
 
 
 
 
+export { getAllData, getAllTitlesCharcters, getCharactersByGender, getCharacterById, getMappedCharactersData }
 
-const main = async () => {
-  // const allData = await getAllData();
-  // console.log(allData);
-  const allCharacters = await getAllTitlesCharcters();
-  console.log(allCharacters);
-  // const byId= await getCharacterById(18)
-  // console.log(byId);
-  // const byGender = await getCharactersByGender("Female");
-  // console.log(byGender);
-  // const mapCharactersData= await getMappedCharactersData();
-  // console.log(mapCharactersData);
 
-}
-
-main();
 

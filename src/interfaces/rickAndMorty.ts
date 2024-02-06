@@ -1,6 +1,4 @@
-interface rickAndMorty{
-
-    results:[
+interface Character{
     id: number,
     name: string,
     status: string,
@@ -19,8 +17,6 @@ interface rickAndMorty{
     episode: string[],
     url: string,
     created: string
-   
-    ]
 }
 
-export { rickAndMorty }
+export { Character }
