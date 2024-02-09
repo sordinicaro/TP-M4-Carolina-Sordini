@@ -6,7 +6,6 @@ import {
 const main = async () => {
     try {
         const args = process.argv.splice(2);
-        console.log(args);
         const action = args[0];
 
 
