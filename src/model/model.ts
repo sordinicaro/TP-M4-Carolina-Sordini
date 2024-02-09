@@ -1,16 +1,16 @@
 import dotenv from "dotenv"
-import { Character } from "../interfaces/rickAndMorty"
+import { Character, NewCaracter } from "../interfaces/rickAndMorty"
 
 dotenv.config()
 
-const urlApi= process.env.API_KEY!;
+const urlApi = process.env.API_KEY!;
 const api = new URL(urlApi);
 
 
 
 const getAllData = async (): Promise<Character[] | Error> => {
   try {
-    const response= await fetch(api);
+    const response = await fetch(api);
     if (!response.ok) {
       throw new Error("Recurso no encontrado.");
     }
@@ -18,8 +18,10 @@ const getAllData = async (): Promise<Character[] | Error> => {
     const rickandmortyData = await response.json();
     const resultsRAM = rickandmortyData.results;
     return resultsRAM;
-  } catch (error: any) {
-    return new Error(error);
+
+
+  } catch (error) {
+    return new Error();
   }
 }
 
@@ -34,8 +36,10 @@ const getAllTitlesCharcters = async (): Promise<string[] | Error> => {
     const characterNames = data.map((character: Character) => character.name);
 
     return characterNames;
-  } catch (error: any) {
-    return error;
+
+
+  } catch (error) {
+    return new Error();
 
   }
 }
@@ -45,16 +49,20 @@ const getAllTitlesCharcters = async (): Promise<string[] | Error> => {
 const getCharacterById = async (id: number): Promise<Character | Error> => {
   try {
 
-    const data: any = await getAllData();
+    const data = await getAllData();
     if (data instanceof Error) {
       throw data;
     }
     const characterById = data.find((character: Character) => id === character.id)
+    if (characterById === undefined) {
+      return new Error();
 
-
+    }
     return characterById;
+
+
   } catch (error) {
-    return  new Error();
+    return new Error();
   }
 }
 
@@ -68,9 +76,11 @@ const getCharactersByGender = async (gender: string): Promise<Character[] | Erro
     if (data instanceof Error) {
       throw data;
     }
-    const charactersByGender = data.filter((character:Character) => character.gender === gender);
+    const charactersByGender = data.filter((character: Character) => character.gender === gender);
 
     return charactersByGender;
+
+
   } catch (error) {
     return new Error();
   }
@@ -78,14 +88,14 @@ const getCharactersByGender = async (gender: string): Promise<Character[] | Erro
 
 
 
-const getMappedCharactersData = async (): Promise< Character[] | Error> => {
+const getMappedCharactersData = async (): Promise<NewCaracter[] | Error> => {
   try {
-    const data:any = await getAllData();
+    const data = await getAllData();
     if (data instanceof Error) {
       throw data;
     }
 
-    const characterDetails = data.map((character:Character) => ({
+    const characterDetails = data.map((character: Character) => ({
       id: character.id,
       name: character.name,
       status: character.status,
@@ -95,6 +105,8 @@ const getMappedCharactersData = async (): Promise< Character[] | Error> => {
     }));
 
     return characterDetails;
+
+
   } catch (error) {
     return new Error();
   }

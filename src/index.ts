@@ -1,6 +1,4 @@
 
-
-
 import {
     getAllData, getAllTitlesCharcters, getCharactersByGender, getCharacterById, getMappedCharactersData
 } from "./model/model";

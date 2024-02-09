@@ -1,4 +1,4 @@
-interface Character{
+interface Character {
     id: number,
     name: string,
     status: string,
@@ -19,4 +19,14 @@ interface Character{
     created: string
 }
 
-export { Character }
+interface NewCaracter {
+    id: number,
+    name: string,
+    status: string,
+    species: string,
+    type: string,
+    gender: string
+}
+
+
+export { Character, NewCaracter }

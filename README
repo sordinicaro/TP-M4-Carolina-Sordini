@@ -1,0 +1,43 @@
+Model:
+
+(Importación de módulos y definición de constantes):
+Se importa el módulo dotenv para cargar variables de entorno desde un archivo .env.
+Se importan las interfaces Character y NewCaracter desde el archivo de interfaces de la carpeta interfaces/rickAndMorty.
+Se obtiene la URL de la API de Rick and Morty desde la variable de entorno API_KEY y se asigna a la constante urlApi.
+En una new URL con la URL de la API y se asigna a la constante api.
+
+Mètodos:
+(getAllData)
+Este mètodo realiza una solicitud a la API de Rick and Morty para obtener todos los datos de los personajes.
+Si la respuesta no es exitosa, se lanza un error indicando que el data no se encontró.
+Se convierte la respuesta a formato JSON y se retorna un array de personajes de ser que esta encuentre la data deseada.
+
+(getAllTitlesCharcters)
+Este mètodo utiliza la función getAllData para obtener todos los datos de los personajes.
+Si ocurre un error al obtener los datos, se propaga el error.
+Se mapea el array de personajes para obtener un array de nombres de personajes.
+Se retorna un array de nombres de personajes.
+
+(getCharacterById)
+Este mètodo utiliza la función getAllData para obtener todos los datos de los personajes.
+Si ocurre un error al obtener los datos, se propaga el error.
+Se busca un personaje por su ID en el array de datos.
+Si el personaje no se encuentra, se retorna un error ,sino se retorna el personaje encontrado.
+
+(getCharactersByGender)
+Este mètodo utiliza la función getAllData para obtener todos los datos de los personajes.
+Si ocurre un error al obtener los datos, retorna el error.
+Se filtran los personajes por su género ,y se retorna un array de personajes que coinciden con el género especificado.
+
+(getMappedCharactersData)
+Este mètodo utiliza la función getAllData para obtener todos los datos de los personajes.
+Si ocurre un error al obtener los datos, retorna el error.
+Se mapean los personajes para obtener un array de objetos con propiedades específicas( id,name,status,species,type,gender).
+Se retorna un array de objetos con los detalles mapeados de los personajes.
+
+
+
+
+
+
+
