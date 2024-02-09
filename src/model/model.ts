@@ -76,7 +76,7 @@ const getCharactersByGender = async (gender: string): Promise<Character[] | Erro
     if (data instanceof Error) {
       throw data;
     }
-    const charactersByGender = data.filter((character: Character) => character.gender.toLocaleLowerCase === gender.toLocaleLowerCase);
+    const charactersByGender = data.filter((character: Character) => character.gender.toLowerCase() === gender.toLowerCase());
 
     return charactersByGender;
 
